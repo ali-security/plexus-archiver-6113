@@ -26,13 +26,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: ['ubuntu-latest', 'windows-latest', 'macOS-latest']
+        os: [ubuntu-22.04, windows-2022, macOS-latest]
         java: ['8', '11', '16', '17']
-        distribution: ['temurin', 'zulu']
+        distribution: [temurin, zulu]
         include:
-          - java: '18-ea'
-            distribution: 'zulu'
-            os: 'ubuntu-latest'
+          - java: 18-ea
+            distribution: zulu
+            os: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -41,6 +41,6 @@ jobs:
         with:
           distribution: ${{ matrix.distribution }}
           java-version: ${{ matrix.java }}
-          cache: 'maven'
+          cache: maven
       - name: Build with Maven
         run: mvn install javadoc:javadoc -e -B -V -Pno-tests-if-not-on-osx
