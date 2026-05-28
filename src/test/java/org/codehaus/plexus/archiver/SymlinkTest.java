@@ -75,6 +75,8 @@ public class SymlinkTest
         unarchiver.setSourceFile( archiveFile );
         unarchiver.setDestFile( output );
         unarchiver.extract();
+        // second unpacking should also work
+        unarchiver.extract();
     }
 
     @Test
@@ -95,6 +97,8 @@ public class SymlinkTest
         ZipUnArchiver unarchiver = (ZipUnArchiver) lookup( UnArchiver.class, "zip" );
         unarchiver.setSourceFile( archiveFile );
         unarchiver.setDestFile( output );
+        unarchiver.extract();
+        // second unpacking should also work
         unarchiver.extract();
     }
 

@@ -983,4 +983,26 @@ public class ZipArchiverTest
         }
     }
 
+    @Test
+    public void testNonExistingSymlink()
+        throws Exception
+    {
+        if ( !Os.isFamily( Os.FAMILY_WINDOWS ) )
+        {
+            File zipFile = new File( "src/test/resources/symlinks/non_existing_symlink.zip" );
+            ZipUnArchiver unArchiver = getZipUnArchiver( zipFile );
+            String tmpdir = Files.createTempDirectory( "tmpe_extract" ).toFile().getAbsolutePath();
+            unArchiver.setDestDirectory( new File( tmpdir ) );
+            try
+            {
+                unArchiver.extract();
+                fail( "Expected ArchiverException due to symlink exploit attempt" );
+            }
+            catch ( ArchiverException e )
+            {
+                assertEquals( "Entry is outside of the target directory (entry1)", e.getMessage() );
+            }
+        }
+    }
+
 }
